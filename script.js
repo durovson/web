@@ -14,7 +14,7 @@
 
     constructor(el) {
       this.el = el;
-      this.chars = "!<>-_\\/[]{}—=+*^?#________";
+      this.chars = "!<>-_\\/[]{}—=+*^?#_";
       this.frame = 0;
       this.queue = [];
       this.frameRequest = null;
@@ -130,9 +130,9 @@
 
     const phrases = [
 
-      "CREATOR & DEVELOPER",
-      "NFT & BOT SPECIALIST",
-      "UI / UX ENGINEER"
+      "CREATOR & BUILDER",
+      "NFT & BOT",
+      "UI/UX ENGINEER"
 
     ];
 
