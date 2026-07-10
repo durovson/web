@@ -78,6 +78,7 @@ img { max-width: 100%; }
     text-decoration: none; 
     color: inherit; 
     width: 280px;
+    height: 280px;
     flex-shrink: 0; 
     padding: 9px; 
     border: var(--border); 
@@ -86,6 +87,7 @@ img { max-width: 100%; }
     transform: rotate(var(--tilt, 0deg)); 
     transition: transform 0.3s ease, box-shadow 0.3s ease; 
     cursor: pointer; 
+    overflow: hidden; /* Добавьте, чтобы картинка не вылезала за границы */
 }
 
 .nft-card img {
