@@ -60,7 +60,7 @@
       </div>
     </section>
 
-    <!-- 02 — COLLECTION. Для новой карточки скопируйте один article внутри marquee__group. -->
+    <!-- 02 — COLLECTION -->
     <section id="collection" class="section collection" data-section>
       <div class="section-heading reveal">
         <p><span>02</span> COLLECTION</p>
@@ -68,14 +68,50 @@
         <small>SELECTED NFT WORKS</small>
       </div>
 
-      <div class="marquee reveal" data-marquee aria-label="Бесконечная лента NFT-работ">
-        <div class="marquee__track">
-          <div class="marquee__group">
-            <article class="nft-card"><img src="images/nft1.webp" alt="NFT Cat Card" width="1000" height="1001"><p>CAT CARD <span>001</span></p></article>
-            <article class="nft-card"><img src="images/nft2.webp" alt="NFT портрет" width="1000" height="1000"><p>NFT PORTRAIT <span>002</span></p></article>
-            <article class="nft-card"><img src="images/nft3.webp" alt="NFT Cat Theme" width="1000" height="1000"><p>CAT THEME <span>003</span></p></article>
-            <article class="nft-card"><img src="images/nft4.webp" alt="NFT Character" width="1000" height="1000"><p>CHARACTER <span>004</span></p></article>
+      <!-- Контейнер бегущей строки -->
+      <div class="marquee-wrapper reveal" aria-label="NFT-работы">
+        <div class="marquee-track">
+          
+          <!-- Первая группа карточек -->
+          <div class="marquee-content">
+            <a href="https://getgems.io/collection/EQDwLDJcRXegHyvvRHXouGrUODuF0eagnWzLvUMUSTw8tv3Y/EQDLSXQU7zOOkM3k6dXQzNClVTHjjnHbG3FD0hiKAM0U2zWP" target="_blank" rel="noopener" class="nft-card">
+              <img src="images/nft1.webp" alt="NFT Cat Card" width="1000" height="1001">
+              <p>CAT CARD <span>001</span></p>
+            </a>
+            <a href="https://getgems.io/collection/EQDwLDJcRXegHyvvRHXouGrUODuF0eagnWzLvUMUSTw8tv3Y/EQBF_9N3sYzLdiE877ROKa5XRUPEkvIe4wq5BZAFDBYvnfdB" target="_blank" rel="noopener" class="nft-card">
+              <img src="images/nft2.webp" alt="NFT портрет" width="1000" height="1000">
+              <p>NFT PORTRAIT <span>002</span></p>
+            </a>
+            <a href="https://getgems.io/nft/EQBOU-SD0omePcWQKEUDquzyr5enM5R-MXdDii1c7DKy55Gx" target="_blank" rel="noopener" class="nft-card">
+              <img src="images/nft3.webp" alt="NFT Cat Theme" width="1000" height="1000">
+              <p>CAT THEME <span>003</span></p>
+            </a>
+            <a href="https://getgems.io/nft/EQANsaOQGrWNM6x6z5I8zw2k-aQ14UjuBxEQzBh2VVeMSmur" target="_blank" rel="noopener" class="nft-card">
+              <img src="images/nft4.webp" alt="NFT Character" width="1000" height="1000">
+              <p>CHARACTER <span>004</span></p>
+            </a>
           </div>
+
+          <!-- Вторая группа (клон для бесконечной прокрутки) -->
+          <div class="marquee-content" aria-hidden="true">
+            <a href="https://getgems.io/collection/EQDwLDJcRXegHyvvRHXouGrUODuF0eagnWzLvUMUSTw8tv3Y/EQDLSXQU7zOOkM3k6dXQzNClVTHjjnHbG3FD0hiKAM0U2zWP" target="_blank" rel="noopener" class="nft-card">
+              <img src="images/nft1.webp" alt="NFT Cat Card" width="1000" height="1001">
+              <p>CAT CARD <span>001</span></p>
+            </a>
+            <a href="https://getgems.io/collection/EQDwLDJcRXegHyvvRHXouGrUODuF0eagnWzLvUMUSTw8tv3Y/EQBF_9N3sYzLdiE877ROKa5XRUPEkvIe4wq5BZAFDBYvnfdB" target="_blank" rel="noopener" class="nft-card">
+              <img src="images/nft2.webp" alt="NFT портрет" width="1000" height="1000">
+              <p>NFT PORTRAIT <span>002</span></p>
+            </a>
+            <a href="https://getgems.io/nft/EQBOU-SD0omePcWQKEUDquzyr5enM5R-MXdDii1c7DKy55Gx" target="_blank" rel="noopener" class="nft-card">
+              <img src="images/nft3.webp" alt="NFT Cat Theme" width="1000" height="1000">
+              <p>CAT THEME <span>003</span></p>
+            </a>
+            <a href="https://getgems.io/nft/EQANsaOQGrWNM6x6z5I8zw2k-aQ14UjuBxEQzBh2VVeMSmur" target="_blank" rel="noopener" class="nft-card">
+              <img src="images/nft4.webp" alt="NFT Character" width="1000" height="1000">
+              <p>CHARACTER <span>004</span></p>
+            </a>
+          </div>
+
         </div>
       </div>
     </section>
