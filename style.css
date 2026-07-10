@@ -25,8 +25,8 @@ img { max-width: 100%; }
 .brand { font: 600 14px "JetBrains Mono", monospace; letter-spacing: .12em; color: var(--orange); }
 .nav { display: flex; gap: clamp(15px, 2.4vw, 34px); align-items: center; text-transform: uppercase; font: 600 11px "JetBrains Mono", monospace; }
 .nav a { position: relative; padding-block: 10px; }
-.nav a::after { content: ""; position: absolute; left: 0; right: 100%; bottom: 4px; height: 2px; background: var(--orange); transition: right .25s ease; }
-.nav a:hover::after, .nav a.active::after { right: 0; }
+.nav a::after { content: ""; position: absolute; left: 0; bottom: 4px; width: 100%; height: 2px; background: var(--orange); transform: scaleX(0); transform-origin: left; transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1); }
+.nav a:hover::after, .nav a.active::after { transform: scaleX(1); }
 .nav small { display: none; color: var(--orange); }
 .menu-toggle { display: none; width: 42px; height: 42px; padding: 0; border: var(--border); background: transparent; cursor: pointer; }
 .menu-toggle span { display: block; width: 18px; height: 2px; margin: 5px auto; background: var(--ink); transition: transform .25s ease; }
@@ -41,7 +41,7 @@ img { max-width: 100%; }
 .section-kicker { margin: 0 0 10px; color: var(--orange); font: 600 11px "JetBrains Mono", monospace; }
 .hero__title { min-height: 1.78em; margin: 0; color: var(--ink); font-size: clamp(58px, 7.4vw, 118px); font-weight: 900; letter-spacing: -.055em; line-height: .82; }
 .scramble-char { color: var(--orange); opacity: .65; }
-.hero__subtitle { margin: 18px 0 26px; font: 500 clamp(17px, 1.6vw, 25px) "JetBrains Mono", monospace; }
+.hero__subtitle { margin: 18px 0 26px; font: 500 clamp(18px, 1.8vw, 28px) "JetBrains Mono", monospace; line-height: 1.4; }
 .hero__stats { display: flex; width: fit-content; border: var(--border); box-shadow: 6px 6px 0 var(--olive); }
 .hero__stats article { min-width: clamp(96px, 10vw, 142px); padding: 12px 15px; display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 8px; background: color-mix(in srgb, var(--cream) 68%, var(--apricot)); }
 .hero__stats article + article { border-left: var(--border); }
@@ -70,7 +70,7 @@ img { max-width: 100%; }
 .nft-card { width: clamp(190px, 19vw, 285px); flex: none; padding: 9px; border: var(--border); background: color-mix(in srgb, var(--cream) 74%, var(--apricot)); box-shadow: 5px 6px 0 color-mix(in srgb, var(--olive) 65%, transparent); transform: rotate(var(--tilt, 0deg)); }
 .nft-card:nth-child(odd) { --tilt: -.5deg; }
 .nft-card:nth-child(even) { --tilt: .5deg; }
-.nft-card img { width: 100%; aspect-ratio: 1; display: block; object-fit: cover; border: 1px solid var(--grey); filter: sepia(.12) saturate(.86); }
+.nft-card img { width: 100%; height: auto; aspect-ratio: 1 / 1; display: block; object-fit: cover; object-position: center; border: 1px solid var(--grey); filter: sepia(.12) saturate(.86); }
 .nft-card p { display: flex; justify-content: space-between; margin: 10px 2px 2px; font: 600 10px "JetBrains Mono", monospace; }
 .nft-card p span { color: var(--orange); }
 @keyframes marquee { to { transform: translateX(calc(-50% - var(--marquee-gap) / 2)); } }
@@ -80,8 +80,8 @@ img { max-width: 100%; }
 .service-card:hover { z-index: 2; background: color-mix(in srgb, var(--cream) 62%, var(--apricot)); transform: translateY(-6px); }
 .service-card__number { position: absolute; top: 15px; right: 16px; color: var(--brown); font: 500 9px "JetBrains Mono", monospace; }
 .service-card__icon { width: 42px; height: 42px; display: grid; place-items: center; margin-bottom: auto; border: 1px solid var(--orange); color: var(--orange); font-size: 24px; }
-.service-card h2 { margin: 30px 0 8px; font-size: 21px; }
-.service-card p { min-height: 65px; margin: 0 0 22px; color: var(--ink); line-height: 1.5; }
+.service-card h2 { margin: 30px 0 8px; font-size: 24px; letter-spacing: -0.02em; }
+.service-card p { min-height: 65px; margin: 0 0 22px; color: var(--ink); font-size: 16px; line-height: 1.65; }
 .service-card small { color: var(--brown); font: 500 9px "JetBrains Mono", monospace; }
 
 .brands-grid { display: grid; grid-template-columns: repeat(6, 1fr); border-top: var(--border); border-left: var(--border); }
@@ -124,7 +124,9 @@ img { max-width: 100%; }
   .nav small { display: inline; margin-right: 12px; font-size: 10px; }
   .hero { min-height: auto; grid-template-columns: 1fr; padding-top: 52px; }
   .hero__meta { margin-bottom: 30px; }
-  .hero__visual { margin: 8px 8px 20px 0; }
+  .hero__visual { margin: 15px 0 25px; width: 100%; max-width: 100%; overflow: hidden; }
+  .hero__image-frame { width: 100%; }
+  .hero__image-frame img { aspect-ratio: 1 / 1; object-position: top center; }
   .hero__stats { width: 100%; }
   .hero__stats article { min-width: 0; flex: 1; padding: 10px; }
   .hero__stats small { font-size: 7px; }
