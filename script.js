@@ -131,8 +131,7 @@
     const phrases = [
 
       "CREATOR & BUILDER",
-      "NFT & BOT",
-      "UI/UX ENGINEER"
+      "NFT & BOT"
 
     ];
 
