@@ -82,7 +82,7 @@
 
 // Текстовый scramble (Постоянная анимация)
   const title = document.querySelector("[data-scramble]");
-  if (title && !reduceMotion) {
+  if (title) {
     // Здесь вы можете добавить или изменить фразы, которые будут меняться
     const phrases = [
       "CREATOR &\nDEVELOPER",
