@@ -63,17 +63,21 @@ img { max-width: 100%; }
 .section-heading__line { height: 1px; flex: 1; background: var(--grey); }
 .section-heading small { font: 500 9px "JetBrains Mono", monospace; white-space: nowrap; }
 
-.marquee { width: 100vw; margin-left: calc((min(1440px, 100vw) - 100vw) / 2 - var(--page-x)); overflow: hidden; padding-block: 10px 18px; }
-.marquee__track { --marquee-gap: 18px; display: flex; width: max-content; gap: var(--marquee-gap); will-change: transform; animation: marquee 28s linear infinite; }
-.marquee__group { display: flex; flex-shrink: 0; gap: var(--marquee-gap); padding-left: var(--marquee-gap); }
-.marquee:hover .marquee__track { animation-play-state: paused; }
-.nft-card { width: clamp(190px, 19vw, 285px); flex: none; padding: 9px; border: var(--border); background: color-mix(in srgb, var(--cream) 74%, var(--apricot)); box-shadow: 5px 6px 0 color-mix(in srgb, var(--olive) 65%, transparent); transform: rotate(var(--tilt, 0deg)); }
+/* --- АНИМИРОВАННАЯ NFT ГАЛЕРЕЯ --- */
+.marquee-wrapper { overflow: hidden; width: 100%; padding: 20px 0; display: flex; align-items: center; }
+.marquee-track { display: flex; width: max-content; animation: scroll 20s linear infinite; }
+.marquee-wrapper:hover .marquee-track { animation-play-state: paused; }
+.marquee-content { display: flex; gap: 24px; padding-right: 24px; }
+@keyframes scroll { to { transform: translateX(-50%); } }
+
+.nft-card { display: block; text-decoration: none; color: inherit; width: clamp(190px, 22vw, 285px); padding: 9px; border: var(--border); background: color-mix(in srgb, var(--cream) 74%, var(--apricot)); box-shadow: 5px 6px 0 color-mix(in srgb, var(--olive) 65%, transparent); transform: rotate(var(--tilt, 0deg)); transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer; flex-shrink: 0; }
 .nft-card:nth-child(odd) { --tilt: -.5deg; }
 .nft-card:nth-child(even) { --tilt: .5deg; }
-.nft-card img { width: 100%; height: auto; aspect-ratio: 1 / 1; display: block; object-fit: cover; object-position: center; border: 1px solid var(--grey); filter: sepia(.12) saturate(.86); }
+.nft-card:hover { transform: scale(1.05) translateY(-5px) !important; box-shadow: 8px 12px 0 color-mix(in srgb, var(--olive) 65%, transparent); z-index: 2; }
+.nft-card img { width: 100%; height: auto; aspect-ratio: 1 / 1; display: block; object-fit: cover; object-position: center; border: 1px solid var(--grey); filter: sepia(.12) saturate(.86); transition: filter 0.3s; }
+.nft-card:hover img { filter: sepia(0) saturate(1); }
 .nft-card p { display: flex; justify-content: space-between; margin: 10px 2px 2px; font: 600 10px "JetBrains Mono", monospace; }
 .nft-card p span { color: var(--orange); }
-@keyframes marquee { to { transform: translateX(calc(-50% - var(--marquee-gap) / 2)); } }
 
 .services-grid { display: grid; grid-template-columns: repeat(4, 1fr); border-top: var(--border); border-left: var(--border); }
 .service-card { position: relative; min-height: 280px; padding: 24px; display: flex; flex-direction: column; border-right: var(--border); border-bottom: var(--border); background: color-mix(in srgb, var(--cream) 88%, var(--apricot)); transition: background .25s ease, transform .25s ease; }
