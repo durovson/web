@@ -1,345 +1,141 @@
-/* ==========================================
-   CHESTER PORTFOLIO
-   script.js
-========================================== */
-
+/* Анимации и меню сайта. Внешние библиотеки не используются. */
 (() => {
   "use strict";
 
-  /* ==========================
-      TEXT SCRAMBLE
-   ========================== */
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const topbar = document.querySelector("#topbar");
+  const menuToggle = document.querySelector("#menuToggle");
+  const mainNav = document.querySelector("#mainNav");
 
-  class TextScramble {
+  // Мобильное меню: закрывается по ссылке, Escape и при переходе на десктоп.
+  const setMenu = (open) => {
+    if (!menuToggle || !mainNav) return;
+    menuToggle.setAttribute("aria-expanded", String(open));
+    menuToggle.setAttribute("aria-label", open ? "Закрыть меню" : "Открыть меню");
+    mainNav.classList.toggle("open", open);
+    document.body.classList.toggle("menu-open", open);
+  };
 
-    constructor(el) {
-      this.el = el;
-      this.chars = "!<>-_\\/[]{}—=+*^?#_";
-      this.frame = 0;
-      this.queue = [];
-      this.frameRequest = null;
-      this.resolve = null;
-    }
+  menuToggle?.addEventListener("click", () => setMenu(menuToggle.getAttribute("aria-expanded") !== "true"));
+  mainNav?.querySelectorAll("a").forEach((link) => link.addEventListener("click", () => setMenu(false)));
+  document.addEventListener("keydown", (event) => event.key === "Escape" && setMenu(false));
+  window.matchMedia("(min-width: 761px)").addEventListener("change", (event) => event.matches && setMenu(false));
 
-    setText(newText) {
+  // Компактная шапка после начала прокрутки.
+  let scrollQueued = false;
+  window.addEventListener("scroll", () => {
+    if (scrollQueued) return;
+    scrollQueued = true;
+    requestAnimationFrame(() => {
+      topbar?.classList.toggle("scrolled", window.scrollY > 40);
+      scrollQueued = false;
+    });
+  }, { passive: true });
 
-      const oldText = this.el.innerText;
+  // Появление блоков и подсветка активного пункта меню.
+  if ("IntersectionObserver" in window && !reduceMotion) {
+    const revealObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add("visible");
+        observer.unobserve(entry.target);
+      });
+    }, { threshold: 0.12, rootMargin: "0px 0px -35px" });
+    document.querySelectorAll(".reveal").forEach((element) => revealObserver.observe(element));
+  } else {
+    document.querySelectorAll(".reveal").forEach((element) => element.classList.add("visible"));
+  }
 
-      const length = Math.max(oldText.length, newText.length);
+  const sectionObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      mainNav?.querySelectorAll("a").forEach((link) => link.classList.toggle("active", link.hash === `#${entry.target.id}`));
+    });
+  }, { rootMargin: "-35% 0px -55%", threshold: 0 });
+  document.querySelectorAll("[data-section]").forEach((section) => sectionObserver.observe(section));
 
-      const promise = new Promise(resolve => this.resolve = resolve);
+  // Счетчики запускаются один раз при появлении блока статистики.
+  const animateCount = (element) => {
+    const target = Number(element.dataset.count);
+    const startedAt = performance.now();
+    const draw = (now) => {
+      const progress = Math.min((now - startedAt) / 1500, 1);
+      element.textContent = Math.round(target * (1 - Math.pow(1 - progress, 4)));
+      if (progress < 1) requestAnimationFrame(draw);
+    };
+    requestAnimationFrame(draw);
+  };
 
-      this.queue = [];
+  const counters = document.querySelectorAll("[data-count]");
+  if (reduceMotion || !("IntersectionObserver" in window)) {
+    counters.forEach((counter) => { counter.textContent = counter.dataset.count; });
+  } else {
+    const counterObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        animateCount(entry.target);
+        observer.unobserve(entry.target);
+      });
+    }, { threshold: 0.8 });
+    counters.forEach((counter) => counterObserver.observe(counter));
+  }
 
-      for (let i = 0; i < length; i++) {
+  // Текстовый scramble из приложенного прототипа, адаптированный под две строки.
+  const title = document.querySelector("[data-scramble]");
+  if (title && !reduceMotion) {
+    const finalText = "CREATOR &\nDEVELOPER";
+    const chars = "!<>-_\\/[]{}=+*^?#";
+    const source = title.innerText;
+    const queue = [...finalText].map((to, index) => ({
+      from: source[index] || "",
+      to,
+      start: 12 + Math.floor(Math.random() * 18),
+      end: 32 + Math.floor(Math.random() * 25),
+      char: ""
+    }));
+    let frame = 0;
 
-        const from = oldText[i] || "";
-        const to = newText[i] || "";
-
-        const start = Math.floor(Math.random() * 40);
-        const end = start + Math.floor(Math.random() * 40);
-
-        this.queue.push({
-          from,
-          to,
-          start,
-          end
-        });
-
-      }
-
-      cancelAnimationFrame(this.frameRequest);
-
-      this.frame = 0;
-
-      this.update();
-
-      return promise;
-
-    }
-
-    update() {
-
+    const scramble = () => {
       let output = "";
       let complete = 0;
-
-      for (let i = 0; i < this.queue.length; i++) {
-
-        let {
-          from,
-          to,
-          start,
-          end,
-          char
-        } = this.queue[i];
-
-        if (this.frame >= end) {
-
-          complete++;
-          output += to;
-
+      queue.forEach((item) => {
+        if (item.to === "\n") { output += "<br>"; complete += 1; return; }
+        if (frame >= item.end) { output += item.to; complete += 1; return; }
+        if (frame >= item.start) {
+          if (!item.char || Math.random() < .3) item.char = chars[Math.floor(Math.random() * chars.length)];
+          output += `<span class="scramble-char">${item.char}</span>`;
+          return;
         }
-
-        else if (this.frame >= start) {
-
-          if (!char || Math.random() < 0.28) {
-
-            char = this.chars[Math.floor(Math.random() * this.chars.length)];
-            this.queue[i].char = char;
-
-          }
-
-          output += `<span class="scramble-char">${char}</span>`;
-
-        }
-
-        else {
-
-          output += from;
-
-        }
-
-      }
-
-      this.el.innerHTML = output;
-
-      if (complete === this.queue.length) {
-
-        this.resolve();
-
-      }
-
-      else {
-
-        this.frameRequest = requestAnimationFrame(() => this.update());
-
-        this.frame++;
-
-      }
-
-    }
-
-  }
-
-
-  const heroTitle = document.querySelector("[data-scramble]");
-
-  if (heroTitle) {
-
-    const fx = new TextScramble(heroTitle);
-
-    const phrases = [
-
-      "CREATOR & BUILDER",
-      "NFT & BOT"
-
-    ];
-
-    let counter = 0;
-
-    const next = () => {
-
-      fx.setText(phrases[counter]).then(() => {
-
-        setTimeout(next, 2600);
-
+        output += item.from;
       });
-
-      counter = (counter + 1) % phrases.length;
-
-    }
-
-    setTimeout(next, 500);
-
+      title.innerHTML = output;
+      frame += 1;
+      if (complete < queue.length) requestAnimationFrame(scramble);
+    };
+    window.setTimeout(() => requestAnimationFrame(scramble), 350);
   }
 
+  // Для бесшовного marquee в HTML хранится только один набор карточек.
+  document.querySelectorAll("[data-marquee]").forEach((marquee) => {
+    const track = marquee.querySelector(".marquee__track");
+    const group = marquee.querySelector(".marquee__group");
+    if (!track || !group || track.children.length > 1) return;
+    const clone = group.cloneNode(true);
+    clone.setAttribute("aria-hidden", "true");
+    clone.querySelectorAll("img").forEach((image) => image.setAttribute("alt", ""));
+    track.appendChild(clone);
+  });
 
-  /* ==========================
-        SCROLL REVEAL
-   ========================== */
-
-  const revealObserver = new IntersectionObserver(entries => {
-
-    entries.forEach(entry => {
-
-      if (entry.isIntersecting) {
-
-        entry.target.classList.add("visible");
-
-        revealObserver.unobserve(entry.target);
-
-      }
-
+  // Небольшой наклон героя за курсором; на touch-устройствах не запускается.
+  const heroVisual = document.querySelector("#heroVisual");
+  const heroFrame = heroVisual?.querySelector(".hero__image-frame");
+  if (heroVisual && heroFrame && !reduceMotion && window.matchMedia("(pointer: fine)").matches) {
+    heroVisual.addEventListener("pointermove", (event) => {
+      const rect = heroVisual.getBoundingClientRect();
+      const rotateY = ((event.clientX - rect.left) / rect.width - .5) * 5;
+      const rotateX = ((event.clientY - rect.top) / rect.height - .5) * -5;
+      heroFrame.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) rotateZ(1deg)`;
     });
-
-  }, {
-
-    threshold: 0.15,
-    rootMargin: "0px 0px -50px"
-
-  });
-
-  document.querySelectorAll(".reveal").forEach(el => {
-
-    revealObserver.observe(el);
-
-  });
-
-
-  /* ==========================
-       COUNTERS
-   ========================== */
-
-  function animateCounter(el, target) {
-
-    const duration = 1800;
-
-    const start = performance.now();
-
-    function frame(time) {
-
-      const progress = Math.min((time - start) / duration, 1);
-
-      const ease = 1 - Math.pow(1 - progress, 4);
-
-      el.textContent = Math.round(target * ease);
-
-      if (progress < 1) {
-
-        requestAnimationFrame(frame);
-
-      }
-
-    }
-
-    requestAnimationFrame(frame);
-
+    heroVisual.addEventListener("pointerleave", () => { heroFrame.style.transform = "rotate(1deg)"; });
   }
-
-  const counterObserver = new IntersectionObserver(entries => {
-
-    entries.forEach(entry => {
-
-      if (!entry.isIntersecting) return;
-
-      animateCounter(
-
-        entry.target,
-
-        Number(entry.target.dataset.count)
-
-      );
-
-      counterObserver.unobserve(entry.target);
-
-    });
-
-  }, {
-
-    threshold: 0.5
-
-  });
-
-  document.querySelectorAll("[data-count]").forEach(el => {
-
-    counterObserver.observe(el);
-
-  });
-
-
-  /* ==========================
-      NAVBAR
-   ========================== */
-
-  const nav = document.querySelector(".topbar");
-
-  window.addEventListener("scroll", () => {
-
-    if (!nav) return;
-
-    nav.classList.toggle(
-
-      "scrolled",
-
-      window.scrollY > 50
-
-    );
-
-  });
-
-
-  /* ==========================
-      SMOOTH SCROLL
-   ========================== */
-
-  document.querySelectorAll('a[href^="#"]').forEach(link => {
-
-    link.addEventListener("click", e => {
-
-      const target = document.querySelector(
-
-        link.getAttribute("href")
-
-      );
-
-      if (!target) return;
-
-      e.preventDefault();
-
-      window.scrollTo({
-
-        top: target.offsetTop - 80,
-
-        behavior: "smooth"
-
-      });
-
-    });
-
-  });
-
-
-  /* ==========================
-      MARQUEE
-   ========================== */
-
-  const marquee = document.querySelector(".marquee__track");
-
-  if (marquee) {
-
-    // Если в HTML карточки ещё не продублированы —
-    // автоматически продублируем один раз
-
-    if (!marquee.dataset.ready) {
-
-      marquee.innerHTML += marquee.innerHTML;
-
-      marquee.dataset.ready = "true";
-
-    }
-
-  }
-
-
-  /* ==========================
-      HERO PARALLAX
-   ========================== */
-
-  const heroImage = document.querySelector(".hero__visual img");
-
-  if (heroImage) {
-
-    window.addEventListener("mousemove", e => {
-
-      const x = (e.clientX / window.innerWidth - 0.5) * 16;
-
-      const y = (e.clientY / window.innerHeight - 0.5) * 16;
-
-      heroImage.style.transform =
-        `translate(${x}px, ${y}px)`;
-
-    });
-
-  }
-
 })();
