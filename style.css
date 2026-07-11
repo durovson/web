@@ -1,5 +1,5 @@
 html, body {
-    max-width: 100%;
+    max-width: 100vw;
     overflow-x: hidden;
 }
 
@@ -92,8 +92,10 @@ img { max-width: 100%; }
 
 .nft-card img {
     width: 100%;
+    height: 100%; /* Убедимся, что занимает всю область */
     aspect-ratio: 1 / 1;
-    object-fit: cover;
+    object-fit: contain; /* Теперь картинка впишется целиком */
+    background: color-mix(in srgb, var(--cream) 74%, var(--apricot)); /* Фон, чтобы не было пустот */
     display: block;
 }
 
