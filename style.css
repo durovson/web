@@ -70,7 +70,13 @@ img { max-width: 100%; }
 
 /* --- АНИМИРОВАННАЯ NFT ГАЛЕРЕЯ --- */
 .marquee-wrapper { overflow: hidden; width: 100%; position: relative; }
-.marquee-track { display: flex; width: max-content; animation: scroll 20s linear infinite; gap: 24px; }
+.marquee-track { 
+    display: flex; 
+    width: max-content; 
+    animation: scroll 20s linear infinite; 
+    gap: 24px; 
+    padding: 20px 0; /* ДОБАВИТЬ: создает пространство для поворота карточек */
+}
 .marquee-content { display: flex; gap: 24px; }
 
 .nft-card { 
@@ -149,7 +155,15 @@ img { max-width: 100%; }
   .hero { min-height: auto; grid-template-columns: 1fr; padding-top: 52px; }
   .hero__meta { margin-bottom: 30px; }
   .hero__visual { margin: 15px 0 25px; width: 100%; max-width: 100%; overflow: hidden; }
-  .hero__image-frame { overflow: hidden; border: var(--border); box-shadow: 14px 14px 0 var(--brown); transform: rotate(1deg); transition: transform .18s ease-out;will-change: transform; backface-visibility: hidden; }
+  .hero__image-frame { 
+    overflow: hidden; 
+    border: var(--border); 
+    box-shadow: 14px 14px 0 var(--brown); 
+    transform: rotate(1deg); 
+    transition: transform .18s ease-out; 
+    will-change: transform; 
+    backface-visibility: hidden; 
+}
   .hero__image-frame img { aspect-ratio: 1 / 1; height: 100%; width: 100%; object-fit: cover; object-position: center; }
   .hero__stats { width: 100%; }
   .hero__stats article { min-width: 0; flex: 1; padding: 10px; }
