@@ -85,9 +85,9 @@
   if (title) {
     const lines = [...title.querySelectorAll("[data-scramble-line]")];
     const phrases = [
-      ["CREATOR &", "DEVELOPER"],
-      ["NFT & BOT", "SPECIALIST"],
-      ["BACKEND", "ENGINEER"]
+      ["CREATOR &", "BUILDER"],
+      ["WEB3 & AI", "DEVELOPER"],
+      ["PIXEL", "ARTIST"]
     ];
     const chars = "!<>-_\\/[]{}=+*^?#";
     let phraseIndex = 0;
