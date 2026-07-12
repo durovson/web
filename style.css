@@ -228,7 +228,13 @@ img { max-width: 100%; }
 
 /* Fixed navigation: remains visible throughout scrolling. */
 body { padding-top: 76px; }
-.topbar { left: 0; right: 0; width: min(1440px, 100%); }
+.topbar {
+  left: 0;
+  right: 0;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+}
 
 /* Stable two-line scramble: JS never creates one long unbroken string. */
 .hero__title {
