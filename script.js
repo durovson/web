@@ -86,7 +86,7 @@
     const lines = [...title.querySelectorAll("[data-scramble-line]")];
     const phrases = [
       ["CREATOR &", "BUILDER"],
-      ["WEB3 & AI", "DEVELOPER"],
+      ["WEB3 & AI", "DEV"],
       ["PIXEL", "ARTIST"]
     ];
     const chars = "!<>-_\\/[]{}=+*^?#";
