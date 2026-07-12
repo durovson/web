@@ -223,7 +223,7 @@ img { max-width: 100%; }
 }
 
 .contact__layout { display: grid; grid-template-columns: 1fr minmax(320px, .65fr); gap: clamp(35px, 8vw, 130px); align-items: end; }
-.contact__title p { margin: 0 0 4px 6px; text-align: left; font-family: "Outfit", sans-serif; font-size: clamp(19px, 2vw, 27px); font-weight: 800; color: var(--grey); margin-left: -0.06em; }
+.contact__title p { margin: 0 0 4px 6px; text-align: left; font-family: "Outfit", sans-serif; font-size: clamp(19px, 2vw, 27px); font-weight: 800; color: var(--ink); margin-left: -0.06em; }
 .contact__title h2 { margin: 0; color: var(--orange); font-size: clamp(60px, 9vw, 150px); line-height: .8; letter-spacing: -.06em; }
 
 .contact__card { padding: 22px; border: var(--border); background: color-mix(in srgb, var(--cream) 76%, var(--apricot)); box-shadow: 8px 8px 0 var(--brown); }
