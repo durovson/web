@@ -74,7 +74,7 @@ img { max-width: 100%; }
 
 .hero { min-height: calc(100svh - 76px); display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(380px, .95fr); align-items: center; gap: clamp(28px, 5vw, 78px); }
 .hero__meta { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: clamp(28px, 5vw, 60px); }
-.hero__meta span { padding: 5px 7px; border: 1px solid var(--olive); font: 500 9px "JetBrains Mono", monospace; }
+.hero__meta span { padding: 5px 7px; border: 1px solid var(--olive); font: 500 13px "JetBrains Mono", monospace; }
 .hero__meta span:last-child { color: var(--orange); }
 
 .section-kicker { 
@@ -223,7 +223,7 @@ img { max-width: 100%; }
 }
 
 .contact__layout { display: grid; grid-template-columns: 1fr minmax(320px, .65fr); gap: clamp(35px, 8vw, 130px); align-items: end; }
-.contact__title p { margin: 0 0 4px 6px; text-align: left; font-family: "Outfit", sans-serif; font-size: clamp(19px, 2vw, 27px); font-weight: 800; color: var(--ink); margin-left: -0.06em; }
+.contact__title p { margin: 0 0 4px 6px; text-align: left; font-family: "Outfit", sans-serif; font-size: clamp(19px, 2vw, 27px); font-weight: 800; color: var(--ink); display: flex; margin-left: -0.06em; flex-direction: column; align-items: flex-start; }
 .contact__title h2 { margin: 0; color: var(--orange); font-size: clamp(60px, 9vw, 150px); line-height: .8; letter-spacing: -.06em; }
 
 .contact__card { padding: 22px; border: var(--border); background: color-mix(in srgb, var(--cream) 76%, var(--apricot)); box-shadow: 8px 8px 0 var(--brown); }
