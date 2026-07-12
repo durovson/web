@@ -77,7 +77,20 @@ img { max-width: 100%; }
 .hero__meta span { padding: 5px 7px; border: 1px solid var(--olive); font: 500 9px "JetBrains Mono", monospace; }
 .hero__meta span:last-child { color: var(--orange); }
 
-.section-kicker { margin: 0 0 10px; color: var(--orange); font: 600 13px "JetBrains Mono", monospace; }
+.section-kicker { 
+    margin: 0 0 10px; 
+    color: var(--ink); 
+    font-family: "Outfit", sans-serif;
+    font-size: clamp(19px, 2vw, 27px); 
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.section-kicker span {
+    color: var(--orange); 
+    font: 600 13px "JetBrains Mono", monospace; 
+    vertical-align: top;
+}
 
 .hero__title { min-height: 2.1em; display: flex; align-items: center; margin: 0; color: var(--ink); font-size: clamp(68px, 8.5vw, 124px); font-weight: 900; letter-spacing: -0.02em; line-height: .95; }
 .scramble-char { color: var(--orange); opacity: .65; display: inline-block; padding-right: 0.05em; }
@@ -210,7 +223,7 @@ img { max-width: 100%; }
 }
 
 .contact__layout { display: grid; grid-template-columns: 1fr minmax(320px, .65fr); gap: clamp(35px, 8vw, 130px); align-items: end; }
-.contact__title p { margin: 0 0 4px; font: 500 13px "JetBrains Mono", monospace; text-align: left; }
+.contact__title p { margin: 0 0 4px; text-align: left; font-family: "Outfit", sans-serif; font-size: clamp(19px, 2vw, 27px); font-weight: 800; color: var(--ink); margin-left: -0.06em; }
 .contact__title h2 { margin: 0; color: var(--orange); font-size: clamp(60px, 9vw, 150px); line-height: .8; letter-spacing: -.06em; }
 
 .contact__card { padding: 22px; border: var(--border); background: color-mix(in srgb, var(--cream) 76%, var(--apricot)); box-shadow: 8px 8px 0 var(--brown); }
@@ -247,8 +260,13 @@ img { max-width: 100%; }
     padding: 44px var(--page-x);
     display: flex;
     flex-direction: column;
-    align-items: stretch;
-    gap: 0;
+    align-items: center;
+    text-transform: uppercase;
+    font-family: "Outfit", sans-serif;
+    font-weight: 800;
+    font-size: clamp(19px, 2vw, 27px);
+    color: var(--ink);
+    gap: clamp(15px, 2.4vw, 34px);
     background: var(--cream);
     opacity: 0;
     transform: translateY(-12px);
