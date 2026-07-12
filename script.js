@@ -80,63 +80,71 @@
     counters.forEach((counter) => counterObserver.observe(counter));
   }
 
-// Текстовый scramble (Постоянная анимация)
+// Текстовый scramble: каждая строка анимируется отдельно, поэтому макет не меняет ширину.
   const title = document.querySelector("[data-scramble]");
   if (title) {
-    // Здесь вы можете добавить или изменить фразы, которые будут меняться
+    const lines = [...title.querySelectorAll("[data-scramble-line]")];
     const phrases = [
-      "CREATOR &\nDEVELOPER",
-      "NFT & BOT\nSPECIALIST",
-      "BACKEND\nENGINEER"
+      ["CREATOR &", "DEVELOPER"],
+      ["NFT & BOT", "SPECIALIST"],
+      ["BACKEND", "ENGINEER"]
     ];
-    let currentPhrase = phrases[0];
-    let phraseIndex = 0;
     const chars = "!<>-_\\/[]{}=+*^?#";
+    let phraseIndex = 0;
 
-    const runScramble = () => {
-      phraseIndex = (phraseIndex + 1) % phrases.length;
-      const nextPhrase = phrases[phraseIndex];
-      const maxLength = Math.max(currentPhrase.length, nextPhrase.length);
-      const queue = [];
+    const setPhrase = (phrase) => {
+      lines.forEach((line, index) => { line.textContent = phrase[index] || ""; });
+      title.setAttribute("aria-label", phrase.join(" "));
+    };
 
-      for (let i = 0; i < maxLength; i++) {
-        const from = currentPhrase[i] || "";
-        const to = nextPhrase[i] || "";
-        const start = Math.floor(Math.random() * 15);
-        const end = start + Math.floor(Math.random() * 25) + 10;
-        queue.push({ from, to, start, end, char: "" });
-      }
-
+    const scrambleLine = (element, from, to) => new Promise((resolve) => {
+      const length = Math.max(from.length, to.length);
+      const queue = Array.from({ length }, (_, i) => ({
+        from: from[i] || "",
+        to: to[i] || "",
+        start: Math.floor(Math.random() * 10),
+        end: 14 + Math.floor(Math.random() * 18),
+        char: ""
+      }));
       let frame = 0;
-      const scramble = () => {
+
+      const draw = () => {
         let output = "";
         let complete = 0;
         queue.forEach((item) => {
-          if (item.to === "\n" && frame >= item.end) { output += "<br>"; complete += 1; return; }
-          if (frame >= item.end) { output += (item.to === "\n" ? "<br>" : item.to); complete += 1; return; }
-          if (frame >= item.start) {
-            if (!item.char || Math.random() < 0.28) item.char = chars[Math.floor(Math.random() * chars.length)];
+          if (frame >= item.end) {
+            output += item.to;
+            complete++;
+          } else if (frame >= item.start) {
+            if (!item.char || Math.random() < .28) {
+              item.char = chars[Math.floor(Math.random() * chars.length)];
+            }
             output += `<span class="scramble-char">${item.char}</span>`;
-            return;
+          } else {
+            output += item.from;
           }
-          output += (item.from === "\n" ? "<br>" : item.from);
         });
-
-        title.innerHTML = output;
+        element.innerHTML = output;
         frame++;
-        if (complete < queue.length) {
-          requestAnimationFrame(scramble);
-        } else {
-          currentPhrase = nextPhrase;
-          // Время ожидания до следующей смены текста (в миллисекундах)
-          setTimeout(runScramble, 3500); 
-        }
+        if (complete < queue.length) requestAnimationFrame(draw);
+        else resolve();
       };
-      requestAnimationFrame(scramble);
-    };
+      requestAnimationFrame(draw);
+    });
 
-    // Запуск первой анимации через 3 секунды после загрузки
-    setTimeout(runScramble, 3000); 
+    setPhrase(phrases[0]);
+
+    if (!reduceMotion) {
+      const runScramble = async () => {
+        const current = phrases[phraseIndex];
+        phraseIndex = (phraseIndex + 1) % phrases.length;
+        const next = phrases[phraseIndex];
+        await Promise.all(lines.map((line, i) => scrambleLine(line, current[i], next[i])));
+        title.setAttribute("aria-label", next.join(" "));
+        setTimeout(runScramble, 3500);
+      };
+      setTimeout(runScramble, 3000);
+    }
   }
 
   // Для бесшовного marquee в HTML хранится только один набор карточек.
