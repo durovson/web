@@ -263,6 +263,7 @@ img { max-width: 100%; }
     align-items: flex-start;
     margin: 0 auto;
     width: fit-content;
+    background: var(--cream);
     opacity: 0;
     text-transform: uppercase;
     font-family: "Outfit", sans-serif;
