@@ -79,8 +79,8 @@ img { max-width: 100%; }
 
 .section-kicker { margin: 0 0 10px; color: var(--orange); font: 600 11px "JetBrains Mono", monospace; }
 
-.hero__title { min-height: 2.1em; display: flex; align-items: center; margin: 0; color: var(--ink); font-size: clamp(68px, 8.5vw, 124px); font-weight: 900; letter-spacing: -.055em; line-height: .95; }
-.scramble-char { color: var(--orange); opacity: .65; }
+.hero__title { min-height: 2.1em; display: flex; align-items: center; margin: 0; color: var(--ink); font-size: clamp(68px, 8.5vw, 124px); font-weight: 900; letter-spacing: -0.02em; line-height: .95; }
+.scramble-char { color: var(--orange); opacity: .65; display: inline-block; padding-right: 0.05em; }
 
 .hero__subtitle { margin: 18px 0 26px; font: 500 clamp(20px, 2vw, 32px) "JetBrains Mono", monospace; line-height: 1.4; }
 
@@ -162,7 +162,7 @@ img { max-width: 100%; }
 .service-card__icon { width: 42px; height: 42px; display: grid; place-items: center; margin-bottom: 24px; border: 1px solid var(--orange); color: var(--orange); font-size: 24px; }
 .service-card h2 { margin: 30px 0 8px; font-size: 28px; letter-spacing: -0.02em; }
 .service-card p { min-height: 65px; margin: 0 0 22px; color: var(--ink); font-size: 18px; line-height: 1.6; }
-.service-card small { margin-top: auto; color: var(--brown); font: 500 9px "JetBrains Mono", monospace; }
+.service-card small { margin-top: auto; color: var(--brown); font: 500 13px "JetBrains Mono", monospace; letter-spacing: .02em; text-transform: uppercase; }
 
 /* --- BRANDS / CLIENTS --- */
 
@@ -217,7 +217,7 @@ img { max-width: 100%; }
 .contact__card p { margin: 0; padding-bottom: 14px; display: grid; gap: 5px; border-bottom: 1px solid var(--grey); }
 .contact__card p + p { padding-top: 14px; }
 .contact__card small { color: var(--brown); font: 500 9px "JetBrains Mono", monospace; }
-.contact__card p a { display: flex; justify-content: space-between; font-size: 17px; font-weight: 600; }
+.contact__card p a { display: flex; justify-content: space-between; font-size: 18px; font-weight: 600; }
 .contact__card .button { width: 100%; margin-top: 18px; }
 
 .footer { min-height: 74px; display: flex; align-items: center; justify-content: space-between; gap: 20px; font: 500 9px "JetBrains Mono", monospace; }
@@ -259,7 +259,7 @@ img { max-width: 100%; }
 
   .nav.open { opacity: 1; transform: none; visibility: visible; pointer-events: auto; }
   .nav a { padding: 18px 0; border-bottom: var(--border); font-size: clamp(22px, 8vw, 36px); }
-  .nav small { display: inline; margin-right: 12px; font-size: 10px; }
+  .nav small { display: inline; margin-right: 12px; font-size: 13px; }
 
   .hero { min-height: auto; grid-template-columns: 1fr; padding-top: 52px; }
   .hero__meta { margin-bottom: 30px; }
@@ -294,11 +294,11 @@ img { max-width: 100%; }
 
   .hero__stats { width: 100%; }
   .hero__stats article { min-width: 0; flex: 1; padding: 10px; }
-  .hero__stats small { font-size: 7px; }
+  .hero__stats small { font-size: 13px; }
 
   .section-heading { flex-wrap: nowrap; gap: 10px; overflow: hidden; }
   .section-heading__line { min-width: 20px; flex: 1; }
-  .section-heading small { width: auto; font-size: 8px; }
+  .section-heading small { width: auto; font-size: 13px; }
 
   .services-grid { grid-template-columns: 1fr; }
   .service-card { min-height: 240px; }
@@ -324,7 +324,7 @@ img { max-width: 100%; }
 
 @media (min-width: 1024px) {
     .section-heading small {
-        font-size: 12px;
+        font-size: 13px;
         letter-spacing: 0.05em;
     }
 
@@ -427,6 +427,6 @@ body { padding-top: 76px; }
 
   .nft-card p {
     min-height: 56px;
-    font-size: 11px;
+    font-size: 13px;
   }
 }
